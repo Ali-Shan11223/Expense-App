@@ -1,5 +1,6 @@
 import 'package:expense_app/transactions.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -47,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       )),
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        trans.amount.toString(),
+                        '\$${trans.amount}',
                         style: const TextStyle(
                             color: Colors.purple,
                             fontWeight: FontWeight.bold,
@@ -62,12 +63,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 15),
                         ),
-                        SizedBox(
-                          height: 10,
+                        const SizedBox(
+                          height: 6,
                         ),
                         Text(
-                          trans.date.toString(),
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          DateFormat.yMMMd().format(trans.date),
+                          style:
+                              const TextStyle(color: Colors.grey, fontSize: 12),
                         )
                       ],
                     )
