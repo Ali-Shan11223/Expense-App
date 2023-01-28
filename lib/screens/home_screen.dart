@@ -13,10 +13,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<Transaction> _userTransactions = [
-    Transaction(
-        id: '1', title: 'New Laptop', amount: 90.99, date: DateTime.now()),
-    Transaction(
-        id: '2', title: 'New Clothes', amount: 40.56, date: DateTime.now())
+    // Transaction(
+    //     id: '1', title: 'New Laptop', amount: 90.99, date: DateTime.now()),
+    // Transaction(
+    //     id: '2', title: 'New Clothes', amount: 40.56, date: DateTime.now())
   ];
 
   void _newTransaction(String title, double amount) {
@@ -61,9 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            const SizedBox(
               width: double.infinity,
-              child: const Card(
+              child: Card(
                 color: Colors.blue,
                 child: Text('CHART!'),
               ),
