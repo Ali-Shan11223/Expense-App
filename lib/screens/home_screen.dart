@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../models/transaction.dart';
+import '../widgets/chart.dart';
 import '../widgets/new_transactions.dart';
 import '../widgets/transactions_list.dart';
 
@@ -38,6 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
         });
   }
 
+  List<Transaction> get _recentTransaction {
+    return _userTransactions;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,12 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              width: double.infinity,
-              child: Card(
-                color: Colors.blue,
-                child: Text('CHART!'),
-              ),
+            Chart(
+              recentTransaction: _recentTransaction,
             ),
             TransactionsList(
               transactions: _userTransactions,
