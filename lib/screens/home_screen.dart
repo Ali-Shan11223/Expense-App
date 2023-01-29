@@ -19,12 +19,12 @@ class _HomeScreenState extends State<HomeScreen> {
     //     id: '2', title: 'New Clothes', amount: 40.56, date: DateTime.now())
   ];
 
-  void _newTransaction(String title, double amount) {
+  void _newTransaction(String title, double amount, DateTime dateTime) {
     final newTrans = Transaction(
         id: DateTime.now().toString(),
         title: title,
         amount: amount,
-        date: DateTime.now());
+        date: dateTime);
     setState(() {
       _userTransactions.add(newTrans);
     });
@@ -39,7 +39,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<Transaction> get _recentTransaction {
-    return _userTransactions;
+    return _userTransactions.where((trans) {
+      return trans.date
+          .isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    }).toList();
+  }
+
+  void deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id);
+    });
   }
 
   @override
@@ -70,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             TransactionsList(
               transactions: _userTransactions,
+              deleteTrans: deleteTransaction,
             )
           ],
         ),

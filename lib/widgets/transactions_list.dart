@@ -5,12 +5,14 @@ import '../models/transaction.dart';
 
 class TransactionsList extends StatelessWidget {
   final List<Transaction> transactions;
-  const TransactionsList({super.key, required this.transactions});
+  final Function deleteTrans;
+  const TransactionsList(
+      {super.key, required this.transactions, required this.deleteTrans});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 400,
+      height: 500,
       child: transactions.isEmpty
           ? Column(
               children: [
@@ -38,30 +40,33 @@ class TransactionsList extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
                   elevation: 5,
                   child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 24,
-                      backgroundColor: Theme.of(context).primaryColor,
-                      child: FittedBox(
-                          child: Padding(
-                        padding: const EdgeInsets.all(6),
-                        child: Text(
-                          '\$${transactions[index].amount}',
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      )),
-                    ),
-                    title: Text(
-                      transactions[index].title,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    subtitle: Text(
-                      DateFormat.yMMMd().format(transactions[index].date),
-                    ),
-                    trailing: Icon(
-                      Icons.delete_forever,
-                      color: Theme.of(context).colorScheme.error,
-                    ),
-                  ),
+                      leading: CircleAvatar(
+                        radius: 24,
+                        backgroundColor: Theme.of(context).primaryColor,
+                        child: FittedBox(
+                            child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: Text(
+                            '\$${transactions[index].amount}',
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        )),
+                      ),
+                      title: Text(
+                        transactions[index].title,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      subtitle: Text(
+                        DateFormat.yMMMd().format(transactions[index].date),
+                      ),
+                      trailing: IconButton(
+                          onPressed: () {
+                            deleteTrans(transactions[index].id);
+                          },
+                          icon: Icon(
+                            Icons.delete_forever,
+                            color: Theme.of(context).colorScheme.error,
+                          ))),
                 );
               },
             ),

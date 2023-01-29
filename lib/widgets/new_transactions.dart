@@ -19,11 +19,11 @@ class _NewTransactionsState extends State<NewTransactions> {
 
   void _submitData() {
     final enteredTitle = _titleController.text;
-    final enteredAmount = double.parse(_amountContorller.text);
-    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+    final enteredAmount = double.tryParse(_amountContorller.text.toString());
+    if (enteredTitle.isEmpty || enteredAmount! <= 0 || selectedDate == null) {
       return;
     }
-    widget.addNewTrans(enteredTitle, enteredAmount);
+    widget.addNewTrans(enteredTitle, enteredAmount, selectedDate);
     Navigator.of(context).pop();
   }
 
@@ -82,7 +82,7 @@ class _NewTransactionsState extends State<NewTransactions> {
             ),
             ElevatedButton(
                 onPressed: () {
-                  _submitData;
+                  _submitData();
                 },
                 child: const Text('Add Transactions'))
             // TextButton(
