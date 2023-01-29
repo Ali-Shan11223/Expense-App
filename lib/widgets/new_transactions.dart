@@ -1,4 +1,7 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTransactions extends StatefulWidget {
   final Function addNewTrans;
@@ -10,18 +13,31 @@ class NewTransactions extends StatefulWidget {
 }
 
 class _NewTransactionsState extends State<NewTransactions> {
-  final titleController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _amountContorller = TextEditingController();
+  DateTime? selectedDate;
 
-  final amountContorller = TextEditingController();
-
-  void submitData() {
-    final enteredTitle = titleController.text;
-    final enteredAmount = double.parse(amountContorller.text);
+  void _submitData() {
+    final enteredTitle = _titleController.text;
+    final enteredAmount = double.parse(_amountContorller.text);
     if (enteredTitle.isEmpty || enteredAmount <= 0) {
       return;
     }
     widget.addNewTrans(enteredTitle, enteredAmount);
     Navigator.of(context).pop();
+  }
+
+  void _datePicker() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1999),
+            lastDate: DateTime.now())
+        .then((pickedDate) {
+      setState(() {
+        selectedDate = pickedDate!;
+      });
+    });
   }
 
   @override
@@ -35,23 +51,48 @@ class _NewTransactionsState extends State<NewTransactions> {
           children: [
             TextField(
               decoration: const InputDecoration(labelText: 'Title'),
-              controller: titleController,
-              onSubmitted: (_) => submitData(),
+              controller: _titleController,
+              onSubmitted: (_) => _submitData(),
             ),
             TextField(
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(labelText: 'Amount'),
-              controller: amountContorller,
-              onSubmitted: (_) => submitData(),
+              controller: _amountContorller,
+              onSubmitted: (_) => _submitData(),
             ),
-            TextButton(
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(selectedDate == null
+                      ? 'No date selected!'
+                      : 'Selected date: ${DateFormat.yMd().format(selectedDate!)}'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    _datePicker();
+                  },
+                  child: const Text(
+                    'Select Date',
+                  ),
+                )
+              ],
+            ),
+            ElevatedButton(
                 onPressed: () {
-                  submitData;
+                  _submitData;
                 },
-                child: const Text(
-                  'Add Transactions',
-                  style: TextStyle(color: Colors.purple),
-                ))
+                child: const Text('Add Transactions'))
+            // TextButton(
+            //     onPressed: () {
+            //       submitData;
+            //     },
+            //     child: const Text(
+            //       'Add Transactions',
+            //       style: TextStyle(color: Colors.purple),
+            //     ))
           ],
         ),
       ),

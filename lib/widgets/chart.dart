@@ -32,7 +32,7 @@ class _ChartState extends State<Chart> {
         'day': DateFormat.E().format(weekDay).substring(0, 1),
         'amount': totalSum.toStringAsFixed(2)
       };
-    });
+    }).reversed.toList();
   }
 
   double get totalSpending {
@@ -46,17 +46,20 @@ class _ChartState extends State<Chart> {
     //print(groupedTransactionValues);
     return Card(
       elevation: 6,
-      margin: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(14),
       child: Row(
         children: groupedTransactionValues.map((data) {
           return Flexible(
             fit: FlexFit.tight,
-            child: ChartBar(
-                label: data['day'].toString(),
-                spendingAmount: double.parse('${data['amount']}'),
-                spendingAmountPer: totalSpending == 0.0
-                    ? 0.0
-                    : double.parse('${data['amount']}') / totalSpending),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+              child: ChartBar(
+                  label: data['day'].toString(),
+                  spendingAmount: double.parse('${data['amount']}'),
+                  spendingAmountPer: totalSpending == 0.0
+                      ? 0.0
+                      : double.parse('${data['amount']}') / totalSpending),
+            ),
           );
         }).toList(),
       ),

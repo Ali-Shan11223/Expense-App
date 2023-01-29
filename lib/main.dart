@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
               titleSmall: const TextStyle(
                   fontFamily: 'OpenSans',
                   fontWeight: FontWeight.bold,
-                  fontSize: 12))),
+                  fontSize: 16))),
       home: const HomeScreen(),
     );
   }
