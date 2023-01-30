@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_null_comparison
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -18,8 +16,11 @@ class _NewTransactionsState extends State<NewTransactions> {
   DateTime? selectedDate;
 
   void _submitData() {
+    if (_amountContorller.text.isEmpty) {
+      return;
+    }
     final enteredTitle = _titleController.text;
-    final enteredAmount = double.tryParse(_amountContorller.text.toString());
+    final enteredAmount = double.tryParse(_amountContorller.text);
     if (enteredTitle.isEmpty || enteredAmount! <= 0 || selectedDate == null) {
       return;
     }
@@ -85,14 +86,6 @@ class _NewTransactionsState extends State<NewTransactions> {
                   _submitData();
                 },
                 child: const Text('Add Transactions'))
-            // TextButton(
-            //     onPressed: () {
-            //       submitData;
-            //     },
-            //     child: const Text(
-            //       'Add Transactions',
-            //       style: TextStyle(color: Colors.purple),
-            //     ))
           ],
         ),
       ),

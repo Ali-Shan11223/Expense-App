@@ -34,7 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
         context: context,
         builder: (ctx) {
-          return NewTransactions(addNewTrans: _newTransaction);
+          return GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              child: NewTransactions(addNewTrans: _newTransaction),
+              );
         });
   }
 

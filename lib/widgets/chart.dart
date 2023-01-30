@@ -3,34 +3,28 @@ import 'package:expense_app/widgets/chart_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-// ignore: must_be_immutable
-class Chart extends StatefulWidget {
-  Chart({super.key, required this.recentTransaction});
+class Chart extends StatelessWidget {
+  const Chart({super.key, required this.recentTransaction});
 
-  List<Transaction> recentTransaction;
+  final List<Transaction> recentTransaction;
 
-  @override
-  State<Chart> createState() => _ChartState();
-}
-
-class _ChartState extends State<Chart> {
   List<Map<String, Object>> get groupedTransactionValues {
     return List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(Duration(days: index));
 
       var totalSum = 0.0;
 
-      for (var i = 0; i < widget.recentTransaction.length; i++) {
-        if (widget.recentTransaction[i].date.day == weekDay.day &&
-            widget.recentTransaction[i].date.month == weekDay.month &&
-            widget.recentTransaction[i].date.year == weekDay.year) {
-          totalSum += widget.recentTransaction[i].amount;
+      for (var i = 0; i < recentTransaction.length; i++) {
+        if (recentTransaction[i].date.day == weekDay.day &&
+            recentTransaction[i].date.month == weekDay.month &&
+            recentTransaction[i].date.year == weekDay.year) {
+          totalSum += recentTransaction[i].amount;
         }
       }
 
       return {
         'day': DateFormat.E().format(weekDay).substring(0, 1),
-        'amount': totalSum.toStringAsFixed(2)
+        'amount': totalSum
       };
     }).reversed.toList();
   }
@@ -43,7 +37,6 @@ class _ChartState extends State<Chart> {
 
   @override
   Widget build(BuildContext context) {
-    //print(groupedTransactionValues);
     return Card(
       elevation: 6,
       margin: const EdgeInsets.all(14),
